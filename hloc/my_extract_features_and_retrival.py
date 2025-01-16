@@ -379,8 +379,14 @@ def extract_single_image(
         grp = fd.create_group(name)
         for k, v in pred.items():
             grp.create_dataset(k, data=v)
-
+    # 提取全局描述子
+    if "global_descriptor" not in pred:
+        logger.warning(f"No 'descriptor' found for {name}. Available keys: {list(pred.keys())}")
+        return None
+    global_descriptor = pred["global_descriptor"]
+    return global_descriptor
     logger.info(f"Extracted feature for {name} => {feature_path.name}")
+
 
 @torch.no_grad()
 def main_my(
