@@ -41,7 +41,7 @@ def visualize_satellite_3d_txt(txt_path):
         size=axis_size, origin=[0, 0, 0])
 
     # 网格地面显示
-    ground_z = np.percentile(z_values, 95)
+    ground_z = np.percentile(z_values, 5)
     min_bound = np.min(points_3d, axis=0)
     max_bound = np.max(points_3d, axis=0)
     grid = o3d.geometry.LineSet.create_from_axis_aligned_bounding_box(

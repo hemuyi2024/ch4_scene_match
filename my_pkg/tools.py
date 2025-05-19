@@ -1,5 +1,7 @@
 from pathlib import Path
 import re
+
+from numexpr.necompiler import double
 from osgeo import osr
 import cv2
 import numpy as np
@@ -24,7 +26,7 @@ def read_pairs(pairs_file):
                 pairs.append(pair)
     return pairs
 
-def pixel_to_geo_coordinates(x, y, geotransform, source_epsg=32650, target_epsg=4326):
+def pixel_to_geo_coordinates(x, y, geotransform, source_epsg=3857, target_epsg=4326):
     """
     将像素坐标转换为经纬度坐标。
 
@@ -58,7 +60,9 @@ def pixel_to_geo_coordinates(x, y, geotransform, source_epsg=32650, target_epsg=
     coord_transform = osr.CoordinateTransformation(source_srs, target_srs)
 
     # 转换为经纬度坐标（EPSG:target_epsg）
-    lat, lon, _ = coord_transform.TransformPoint(x_geo, y_geo)
+    z = 0
+    lat, lon, _ = coord_transform.TransformPoint(x_geo, y_geo, z)
+
 
     return lon, lat, x_geo, y_geo
 
@@ -98,7 +102,7 @@ def plot_traj_tif(map_image_path, loc_file_path, output_image_path, scale_factor
         cv2.circle(map_image, points[i], radius=3, color=(0, 0, 255), thickness=-1)  # 红色点
         # 如果不是第一个点，绘制线段
         if i > 0 :
-            cv2.line(map_image, points[i - 1], points[i], color=(255, 0, 0), thickness=2)  # 蓝色线
+            cv2.line(map_image, points[i - 1], points[i], color=(255, 255, 0), thickness=6)  # 蓝色线
 
     # 保存绘制结果
     cv2.imwrite(output_image_path, map_image)
@@ -123,20 +127,29 @@ def draw_keyframe_trajectory(map_image, points, keyframe_mapping):
     # 绘制关键帧点和连线
     for i in range(len(keyframe_points)):
         # 绘制当前关键帧点
-        cv2.circle(map_image, keyframe_points[i], radius=1, color=(0, 255, 0), thickness=3)  # 绿色点
+        cv2.circle(map_image, keyframe_points[i], radius=1, color=(0, 255, 0), thickness=6)  # 绿色点
         # 如果不是第一个点，绘制关键帧之间的连线
         if i > 0:
-            cv2.line(map_image, keyframe_points[i - 1], keyframe_points[i], color=(255, 0, 0), thickness=3)  # 蓝色线
+            cv2.line(map_image, keyframe_points[i - 1], keyframe_points[i], color=(255, 0, 0), thickness=6)  # 蓝色线
 
+    return map_image
+
+def draw_fusion_keyframe_traj(map_image, points):
+    for i in range(len(points)):
+        # 绘制当前关键帧点
+        cv2.circle(map_image, points[i], radius=1, color=(255, 255, 0), thickness=6)
+        # 如果不是第一个点，绘制关键帧之间的连线
+        if i > 0:
+            cv2.line(map_image, points[i - 1], points[i], color=(0, 0, 255), thickness=6)
     return map_image
 
 def draw_slam_keyframe_traj(map_image, points):
     for i in range(len(points)):
         # 绘制当前关键帧点
-        cv2.circle(map_image, points[i], radius=1, color=(255, 255, 0), thickness=3)
+        cv2.circle(map_image, points[i], radius=1, color=(255, 255, 0), thickness=6)
         # 如果不是第一个点，绘制关键帧之间的连线
         if i > 0:
-            cv2.line(map_image, points[i - 1], points[i], color=(0, 0, 255), thickness=3)
+            cv2.line(map_image, points[i - 1], points[i], color=(0, 255, 255), thickness=6)
     return map_image
 
 

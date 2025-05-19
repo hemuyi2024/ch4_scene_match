@@ -1,8 +1,17 @@
+from PIL.ImageChops import offset
+
 from my_pkg.tools import rotate_point_z
 def process_trajectory(input_file, output_file):
-    # 定义常量
-    offset_x = 668622.79564965
-    offset_y = 3548240.19051630
+
+
+
+    # 定义常量 city3
+    #city1
+    offset_x = 12123903.13870406
+    offset_y = 4061593.69299384
+    #city3
+    # offset_x = 12117477.47634211
+    # offset_y = 4055168.53057232
 
     # offset_x = 668641.8187182354
     # offset_y = 3548389.262551563
@@ -33,8 +42,8 @@ def process_trajectory(input_file, output_file):
 
 
 # 调用函数，传入文件路径
-input_file = '/home/lty/code/ORB_SLAM3_detailed_comments/traj/KeyFrameTrajectoryGeo.txt'
-output_file = '/home/lty/outputs/scene_match_0103_seu_2/geoKFrame.txt'
+input_file = '/home/lty/outputs/RealUAV/city1/KeyFrameTrajectoryGeo.txt'
+output_file = '/home/lty/outputs/RealUAV/city1/geoKFrame_gt.txt'
 process_trajectory(input_file, output_file)
 
 print("Processing complete. Converted data saved to 'geoKFrame.txt'.")

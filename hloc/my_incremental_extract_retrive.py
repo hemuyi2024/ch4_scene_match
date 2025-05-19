@@ -1,5 +1,8 @@
 # incremental_extract_retrieve.py
 
+# import rospy
+# from std_msgs.msg import String
+
 import argparse
 import time
 from pathlib import Path
@@ -23,6 +26,7 @@ from hloc.my_pairs_from_retrival import load_database_descriptors, build_faiss_i
 from hloc.match_features import dynamic_load
 from hloc import my_match_features
 from my_pkg.tools import sort_key, pixel_to_geo_coordinates
+
 
 def list_h5_names(path: Path):
     with h5py.File(str(path), "r") as fd:
@@ -85,12 +89,15 @@ def run_incremental_retrieve(
         as_half: bool = True,
         overwrite: bool = False
 ):
-    loc_path = Path("/home/lty/outputs/scene_match_0103_seu_2/scene_loc.txt")
+    loc_path = Path("/home/lty/outputs/RealUAV/city3/scene_loc.txt")
     angle = 0
     # 验证配置是否存在
     if conf not in confs:
         raise ValueError(f"Configuration '{conf}' not found. Available configurations: {list(confs.keys())}")
 
+    #about ros
+    # pub = rospy.Publisher('scene_match', String, queue_size=10)
+    # rospy.init_node('pycharm_talker', anonymous=True)
     # 加载配置
     config = confs[conf]
 
@@ -123,6 +130,7 @@ def run_incremental_retrieve(
         t1 = time.time()
         n =0
         for query_image_path in query_images:
+            query_name = query_image_path.stem
             print(f"Processing query image: {query_image_path.name}")
             sp_query_name = f"{query_dir_name}/{query_image_path.name}"
 
@@ -140,7 +148,7 @@ def run_incremental_retrieve(
                 print(f"Feature extraction failed for {query_image_path.name}.")
             # 读取查询描述子
                 with h5py.File(str(query_feature_path), "r") as fd:
-                    query_name = query_image_path.stem
+                    # query_name = query_image_path.stem
                     if query_name not in fd:
                         print(f"Feature for {query_name} not found after extraction.")
                         continue
@@ -148,8 +156,6 @@ def run_incremental_retrieve(
                         print(f"No global_descriptor found for {query_name}.")
                         continue
                     query_desc = fd[query_name]["global_descriptor"][:].astype(np.float32)
-                    # print(f"Query descriptor shape: {query_desc.shape}")
-                    # print(f"Query descriptor: {query_desc}")
             query_desc = query_desc[:].astype(np.float32)
             faiss.normalize_L2(query_desc.reshape(1, -1))
 
@@ -172,7 +178,7 @@ def run_incremental_retrieve(
                 pairs=img_pairs,
                 features=sp_feature_path,
                 model=lg_model,
-                matches = Path("/home/lty/outputs/scene_match_0103_seu_2/SP+LG_matches.h5"),
+                matches = Path("/home/lty/outputs/RealUAV/city3/SP+LG_matches.h5"),
             )
             t4 = time.time()
             print(f"wurenji center_tif: {center_tif}")
@@ -186,14 +192,16 @@ def run_incremental_retrieve(
                 y_in_map = int(start_y) + pixel_y
                 print(f"无人机图像中心点在地图上的位置：{x_in_map},{y_in_map}")
             print(f"Matching completed in {t4 - t3:.3f} s.")
-            geotransform = [668601.89603705, 0.03459999999999788, 0.0, 3548451.1491134795, 0.0, -0.03459999999998963]
-            lon, lat, x_geo, y_geo = pixel_to_geo_coordinates(x_in_map, y_in_map, geotransform)
+            geotransform = [12117256.345935825, 0.2985821417389691, 0.0, 4055825.1578397285, 0.0, -0.2985821417389691]
+            lon, lat, x_geo, y_geo = pixel_to_geo_coordinates(x_in_map, y_in_map, geotransform,source_epsg=3857)
             print(f"无人机图像中心点的经纬度：{lat}, {lon}")
             if n == 0:
                 x_origin, y_origin = x_geo, y_geo
             loc_file.write(
                 f"{sp_query_name} {lon:.8f} {lat:.8f} {x_in_map:.8f} {y_in_map:.8f} {x_geo:.8f} {y_geo:.8f} {x_geo - x_origin:.10f} {y_origin - y_geo:.10f} {angle:.8f}\n")
-
+            pub_data = f"{sp_query_name} {lon:.8f} {lat:.8f}"
+            # pub.publish(pub_data)
+            # rospy.loginfo(pub_data)
             n+=1
         t2 = time.time()
         print(f"Retrieval completed in {t2 - t1:.3f} s.")

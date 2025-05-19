@@ -3,14 +3,14 @@ import cv2
 
 # from scripts.tum2geo import output_file
 
-gt_file = "/home/lty/datasets_my/DJI/m300/DJI_0103_2_W_gt(cut).txt"
-geotransform_file = "/home/lty/data/seu_geotransform_m300.txt"
-map_file = "/home/lty/data/SEU/seu_resized/seu_resized_m300.tif"
-output_file = "/home/lty/outputs/scene_match_0103_seu_2/gt.png"
+gt_file = "/home/lty/datasets/RealUAV/city1/gt.txt"
+geotransform_file = "/home/lty/datasets/RealUAV/city1/geotransform.txt"
+map_file = "/home/lty/datasets/RealUAV/city1/mapbox.tif"
+output_file = "/home/lty/outputs/RealUAV/city1/gt.png"
 
-def plot_gt(gt_file=gt_file, geotransform_file=geotransform_file, source_epsg=4326, target_epsg=32650,
+def plot_gt(gt_file=gt_file, geotransform_file=geotransform_file, source_epsg=4326, target_epsg=3857,
             map_file=map_file):
-    scale = 0.2
+    scale = 1.0
     geotransform = []
     with open(geotransform_file, "r") as f:
         # 逐行读取文件内容
@@ -73,7 +73,7 @@ def plot_gt(gt_file=gt_file, geotransform_file=geotransform_file, source_epsg=43
         cv2.circle(map_image, gt_traj[i], radius=1, color=(0, 255, 0), thickness=1)  # 绿色点
         # 如果不是第一个点，绘制关键帧之间的连线
         if i > 0:
-            cv2.line(map_image, gt_traj[i - 1], gt_traj[i], color=(0, 255, 0), thickness=3)  # 蓝色线
+            cv2.line(map_image, gt_traj[i - 1], gt_traj[i], color=(0, 255, 0), thickness=6)  # 蓝色线
             print(f"绘制连线：{gt_traj[i - 1]} -> {gt_traj[i]}")
     cv2.imwrite(output_file, map_image)
 

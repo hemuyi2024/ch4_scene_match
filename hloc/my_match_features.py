@@ -272,8 +272,9 @@ def match_from_paths(
         pts2 = kp2[matches_cpu[:, 1]]
 
         H, mask = cv2.findHomography(pts1, pts2, cv2.RANSAC)
-        h_uav, w_uav = 1080, 1920
+        h_uav, w_uav = 490, 490
         center_uav = np.array([[w_uav / 2, h_uav / 2]], dtype=np.float16)
+        center_uav[0][1] = center_uav[0][1]
         # 将中心点坐标转换为齐次坐标
         center_uav_homogeneous = np.array([center_uav[0][0], center_uav[0][1], 1.0])  # 形状为 (3,)
         # 通过单应性矩阵进行变换

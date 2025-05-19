@@ -1,6 +1,10 @@
+import os
+os.environ['PROJ_LIB'] = '/home/lty/anaconda3/envs/hloc/share/proj'
 from osgeo import osr
 from my_pkg.tools import parse_keyframe_file
 from math import sqrt
+from geopy.distance import geodesic
+
 
 def ComputeAndSaveError(gt_file, geoKeyFrame_file, KeyFrameId_file, error_file):
 
@@ -9,7 +13,7 @@ def ComputeAndSaveError(gt_file, geoKeyFrame_file, KeyFrameId_file, error_file):
     source_srs = osr.SpatialReference()
     source_srs.ImportFromEPSG(4326)
     target_srs = osr.SpatialReference()
-    target_srs.ImportFromEPSG(32650)
+    target_srs.ImportFromEPSG(3857)
     coord_transform = osr.CoordinateTransformation(source_srs, target_srs)
 
     gt_data = []
@@ -46,6 +50,11 @@ def ComputeAndSaveError(gt_file, geoKeyFrame_file, KeyFrameId_file, error_file):
     ex_all = 0
     ey_all = 0
     dist_all = 0
+    d_all = 0
+    d = 0
+    last_x_gt = 0
+    last_y_gt = 0
+
     for frame_id in keyframe_mapping.values():
         # 如果 keyframe_id 超出 slam_data 的长度，说明对应不到位姿
 
@@ -58,6 +67,9 @@ def ComputeAndSaveError(gt_file, geoKeyFrame_file, KeyFrameId_file, error_file):
         if frame_id >= len(gt_data):
             continue
         x_gt, y_gt = gt_data[frame_id]
+        if n == 1:
+            last_x_gt = x_gt
+            last_y_gt = y_gt
 
         # 计算误差
         ex = (x_slam - x_gt)
@@ -66,17 +78,22 @@ def ComputeAndSaveError(gt_file, geoKeyFrame_file, KeyFrameId_file, error_file):
         ey_abs = abs(y_slam - y_gt)
         dist = sqrt(ex ** 2 + ey ** 2)
 
-        results.append((n, frame_id, ex_abs, ey_abs, dist))
+        d = sqrt((x_gt - last_x_gt) ** 2 + (y_gt - last_y_gt) ** 2)
+        d_all += d
+        last_x_gt = x_gt
+        last_y_gt = y_gt
+        results.append((n, frame_id, ex_abs, ey_abs, dist, d_all))
 
         ex_all += ex_abs
         ey_all += ey_abs
         dist_all += dist
+
         # 将误差写入文件（文件不存在就创建）
     with open(error_file, "w", encoding="utf-8") as f:
         # 标题行（可选）
         # f.write("KeyFrameID, FrameID, ErrorX, ErrorY, Distance\n")
-        for (kf_id, frm_id, ex_abs, ey_abs, dist) in results:
-            f.write(f"{frm_id}, {ex_abs:.4f}, {ey_abs:.4f}, {dist:.4f}\n")
+        for (kf_id, frm_id, ex_abs, ey_abs, dist, d_all) in results:
+            f.write(f"{frm_id}, {ex_abs:.4f}, {ey_abs:.4f}, {dist:.4f}, {d_all:.4f}\n")
 
     print(f"定位误差已经写入到 {error_file} 中。")
     ex_everage = ex_all / len(results)
@@ -91,9 +108,9 @@ def ComputeAndSaveError(gt_file, geoKeyFrame_file, KeyFrameId_file, error_file):
 
 
 if __name__ == '__main__':
-    gt_file = "/home/lty/datasets_my/DJI/m300/DJI_0103_2_W_gt(cut).txt"
-    KeyFrameId_file = "/home/lty/code/ORB_SLAM3_detailed_comments/KeyFrameId.txt"
-    error_file = "/home/lty/outputs/scene_match_0103_seu_2/error.txt"
-    geoKeyFrame_file = "/home/lty/outputs/scene_match_0103_seu_2/geoKFrame.txt"
+    gt_file = "/home/lty/datasets/RealUAV/city1/gt.txt"
+    KeyFrameId_file = "/home/lty/outputs/RealUAV/city1/KeyFrameId.txt"
+    error_file = "/home/lty/outputs/RealUAV/city1/error_fusion_slam_gt.txt"
+    geoKeyFrame_file = '/home/lty/outputs/RealUAV/city1/geoKFrame_gt.txt'
 
     ComputeAndSaveError(gt_file, geoKeyFrame_file, KeyFrameId_file, error_file)
