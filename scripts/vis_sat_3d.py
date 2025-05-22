@@ -74,5 +74,5 @@ def visualize_satellite_3d_txt(txt_path):
 
 
 if __name__ == '__main__':
-    txt_path = "/home/lty/ch4/output_elevation/satellite_3d_final.txt"
+    txt_path = "/home/lty/ch4/output_elevation_seu/satellite_3d_geo.txt"
     visualize_satellite_3d_txt(txt_path)

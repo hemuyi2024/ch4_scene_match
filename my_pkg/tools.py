@@ -134,6 +134,19 @@ def draw_keyframe_trajectory(map_image, points, keyframe_mapping):
 
     return map_image
 
+def draw_keyframe_elevation_trajectory(map_image, points, keyframe_mapping):
+    keyframe_points = [points[frame_id] for frame_id in keyframe_mapping.values() if frame_id < len(points)]
+
+    # 绘制关键帧点和连线
+    for i in range(len(keyframe_points)):
+        # 绘制当前关键帧点
+        cv2.circle(map_image, keyframe_points[i], radius=1, color=(0, 255, 0), thickness=6)  # 绿色点
+        # 如果不是第一个点，绘制关键帧之间的连线
+        if i > 0:
+            cv2.line(map_image, keyframe_points[i - 1], keyframe_points[i], color=(255, 255, 0), thickness=6)  # 蓝色线
+
+    return map_image
+
 def draw_fusion_keyframe_traj(map_image, points):
     for i in range(len(points)):
         # 绘制当前关键帧点

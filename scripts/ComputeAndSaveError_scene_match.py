@@ -107,8 +107,8 @@ def ComputeAndSaveError(gt_file, loc_file, KeyFrameId_file, error_file):
 if __name__ == '__main__':
     gt_file = "/home/lty/datasets/RealUAV/city1/gt.txt"
     KeyFrameId_file = "/home/lty/outputs/RealUAV/city1/KeyFrameId.txt"
-    error_file = "/home/lty/outputs/RealUAV/city1/error_pure_scene.txt"
-    loc_file = "/home/lty/outputs/RealUAV/city1/loc.txt"
+    error_file = "/home/lty/outputs/RealUAV/city1/error_match.txt"
+    loc_file = "/home/lty/outputs/RealUAV/city1/loc_match.txt"
 
 
 

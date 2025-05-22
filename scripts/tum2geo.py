@@ -7,8 +7,8 @@ def process_trajectory(input_file, output_file):
 
     # 定义常量 city3
     #city1
-    offset_x = 12123903.13870406
-    offset_y = 4061593.69299384
+    offset_x = 12123905.77494114
+    offset_y = 4061590.61553926
     #city3
     # offset_x = 12117477.47634211
     # offset_y = 4055168.53057232
@@ -42,8 +42,8 @@ def process_trajectory(input_file, output_file):
 
 
 # 调用函数，传入文件路径
-input_file = '/home/lty/outputs/RealUAV/city1/KeyFrameTrajectoryGeo.txt'
-output_file = '/home/lty/outputs/RealUAV/city1/geoKFrame_gt.txt'
+input_file = '/home/lty/outputs/RealUAV/city1/KeyFrameTrajectory.txt'
+output_file = '/home/lty/outputs/RealUAV/city1/geoKFrame_proposed(slam).txt'
 process_trajectory(input_file, output_file)
 
 print("Processing complete. Converted data saved to 'geoKFrame.txt'.")

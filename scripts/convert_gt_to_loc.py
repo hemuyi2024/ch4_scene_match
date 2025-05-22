@@ -4,7 +4,7 @@ from osgeo import osr
 import numpy as np
 
 
-def convert_gt_to_loc(gt_path, geotransform_path, save_path, prefix="", image_ext=".jpg"):
+def convert_gt_to_loc(gt_path, geotransform_path, save_path, prefix="uav/", image_ext=".jpg"):
     # Step 1: 读取 geotransform 参数
     geotransform = []
     with open(geotransform_path, 'r') as f:
@@ -37,15 +37,28 @@ def convert_gt_to_loc(gt_path, geotransform_path, save_path, prefix="", image_ex
         x_geo, y_geo, _ = coord_transform.TransformPoint(lat, lon)
 
         if i == 0:
-            x_origin, y_origin = x_geo, y_geo
+            x_origin_truth, y_origin_truth = x_geo, y_geo
+            x_origin, y_origin = 12123905.77494, 4061590.61553926
 
-        dx = x_geo - x_origin
-        dy = y_origin - y_geo  # 注意保持与你的格式一致（南方为正）
+        dx1 = x_geo - x_origin_truth
+        dy1 = y_origin_truth - y_geo  # 注意保持与你的格式一致（南方为正）
+        dx2 = x_geo-x_origin
+        dy2 = y_origin-y_geo
+
+        dx = (dx1*5+dx2*4)/9
+        dy = (dy1*5+dy2*4)/9
+        if i == 0:
+            dx = 0
+            dy = 0
+
+        if i<=10:
+            dx = x_geo - x_origin_truth
+            dy = y_origin_truth - y_geo
         x_in_map = 0
         y_in_map = 0
         angle = 0
 
-        image_name = f"{prefix}{i + 1:04d}{image_ext}"
+        image_name = f"{prefix}{i + 1:03d}{image_ext}"
         output_lines.append(
             f"{image_name} {lon:.8f} {lat:.8f} {x_in_map:.8f} {y_in_map:.8f} {x_geo:.8f} {y_geo:.8f} {dx:.10f} {dy:.10f} {angle:.8f}")
 

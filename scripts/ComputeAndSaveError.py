@@ -110,7 +110,7 @@ def ComputeAndSaveError(gt_file, geoKeyFrame_file, KeyFrameId_file, error_file):
 if __name__ == '__main__':
     gt_file = "/home/lty/datasets/RealUAV/city1/gt.txt"
     KeyFrameId_file = "/home/lty/outputs/RealUAV/city1/KeyFrameId.txt"
-    error_file = "/home/lty/outputs/RealUAV/city1/error_fusion_slam_gt.txt"
-    geoKeyFrame_file = '/home/lty/outputs/RealUAV/city1/geoKFrame_gt.txt'
+    error_file = "/home/lty/outputs/RealUAV/city1/error_proposed(slam).txt"
+    geoKeyFrame_file = '/home/lty/outputs/RealUAV/city1/geoKFrame_proposed(slam).txt'
 
     ComputeAndSaveError(gt_file, geoKeyFrame_file, KeyFrameId_file, error_file)
