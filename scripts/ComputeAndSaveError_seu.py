@@ -3,8 +3,10 @@ os.environ['PROJ_LIB'] = '/home/lty/anaconda3/envs/hloc/share/proj'
 from osgeo import osr
 from my_pkg.tools import parse_keyframe_file
 from math import sqrt
+from geopy.distance import geodesic
 
-def ComputeAndSaveError(gt_file, loc_file, KeyFrameId_file, error_file):
+
+def ComputeAndSaveError(gt_file, geoKeyFrame_file, KeyFrameId_file, error_file):
 
     keyframe_mapping = parse_keyframe_file(KeyFrameId_file)
 
@@ -28,18 +30,18 @@ def ComputeAndSaveError(gt_file, loc_file, KeyFrameId_file, error_file):
                 lat = float(lat_str.strip())
                 x, y, _ = coord_transform.TransformPoint(lat, lon)
                 gt_data.append((x, y))
-    loc_data = []
-    with open(loc_file, 'r') as f:
+    slam_data = []
+    with open(geoKeyFrame_file, 'r') as f:
         lines = f.readlines()
         for line in lines:
             parts = line.strip().split()
-            if len(parts) < 10:
+            if len(parts) < 2:
                 continue
-            x_geo = parts[5]
-            y_geo = parts[6]
+            x_geo = parts[0]
+            y_geo = parts[1]
             x_geo = float(x_geo)
             y_geo = float(y_geo)
-            loc_data.append((x_geo, y_geo))
+            slam_data.append((x_geo, y_geo))
     results =[]
     # 遍历 keyframe_mapping，计算每个关键帧的误差
     # keyframe_mapping[keyframe_id] = frame_id
@@ -52,11 +54,12 @@ def ComputeAndSaveError(gt_file, loc_file, KeyFrameId_file, error_file):
     d = 0
     last_x_gt = 0
     last_y_gt = 0
+
     for frame_id in keyframe_mapping.values():
         # 如果 keyframe_id 超出 slam_data 的长度，说明对应不到位姿
-        # print(f"frame_id: {frame_id}")
+
         # 取 SLAM 估计值
-        x_slam, y_slam = loc_data[frame_id]
+        x_slam, y_slam = slam_data[n]
         n+=1
 
         # 取真值
@@ -79,12 +82,12 @@ def ComputeAndSaveError(gt_file, loc_file, KeyFrameId_file, error_file):
         d_all += d
         last_x_gt = x_gt
         last_y_gt = y_gt
-
         results.append((n, frame_id, ex_abs, ey_abs, dist, d_all))
 
         ex_all += ex_abs
         ey_all += ey_abs
         dist_all += dist
+
         # 将误差写入文件（文件不存在就创建）
     with open(error_file, "w", encoding="utf-8") as f:
         # 标题行（可选）
@@ -105,11 +108,9 @@ def ComputeAndSaveError(gt_file, loc_file, KeyFrameId_file, error_file):
 
 
 if __name__ == '__main__':
-    gt_file = "/home/lty/outputs/seu0524/009/gt.txt"
-    KeyFrameId_file = "/home/lty/outputs/seu0524/009/KeyFrameId.txt"
-    error_file = "/home/lty/paper/results/052409/error_files/error_H.txt"
-    loc_file = "/home/lty/outputs/seu0524/009/loc_H.txt"
+    gt_file = "/home/lty/outputs/scene_match_seu_0110_6/gt.txt"
+    KeyFrameId_file = "/home/lty/outputs/scene_match_seu_0110_6/KeyFrameId.txt"
+    error_file = "/home/lty/paper/results/011006/errors/error_proposed.txt"
+    geoKeyFrame_file = '/home/lty/paper/results/011006/proposed.txt'
 
-
-
-    ComputeAndSaveError(gt_file, loc_file, KeyFrameId_file, error_file)
+    ComputeAndSaveError(gt_file, geoKeyFrame_file, KeyFrameId_file, error_file)

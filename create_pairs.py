@@ -47,8 +47,8 @@ def create_pairs(uav_dir, tif_dir, pairs_file, mappings):
                 if mapping['start_num'] <= img_num <= mapping['end_num']:
                     tif_name = mapping['tif_name']
                     if tif_name in tif_images:
-                        uav_img_path = os.path.join("uav/",uav_img)
-                        tif_file_path = os.path.join("tif/",tif_name)
+                        uav_img_path = os.path.join("seu_uav_052409/",uav_img)
+                        tif_file_path = os.path.join("seu_tif_m300/",tif_name)
                         pairs.append((uav_img_path, tif_file_path))
                         matched = True
                         break  # 找到匹配的范围，退出内层循环
@@ -70,13 +70,134 @@ def create_pairs(uav_dir, tif_dir, pairs_file, mappings):
 
 if __name__ == "__main__":
     # 无人机图片文件夹路径
-    uav_directory = "/home/lty/datasets/RealUAV/city1/uav"
+    uav_directory = "/home/lty/datasets_my/DJI/m300/seu_uav_052410"
     # TIF 影像文件夹路径
-    tif_directory = "/home/lty/datasets/RealUAV/city1/tif"
+    tif_directory = "/home/lty/datasets_my/DJI/m300/seu_tif_m300"
     # 输出的 pairs.txt 文件路径
-    pairs_txt_path = "/home/lty/outputs/RealUAV/city1/pairs.txt"
+    pairs_txt_path = "//home/lty/outputs/seu0524/010/pairs.txt"
 
     # 指定编号范围映射关系 11-21-dji0200
+    mappings_052410 = [
+        {
+            'start_num': 0,
+            'end_num': 90,
+            'tif_name': '20_7500_3000.tif'
+        },
+        {
+            'start_num': 91,
+            'end_num': 154,
+            'tif_name': '13_7500_1500.tif'
+        },
+        {
+            'start_num': 155,
+            'end_num': 200,
+            'tif_name': '12_6000_1500.tif'
+        },
+        {
+            'start_num': 201,
+            'end_num': 240,
+            'tif_name': '11_4500_1500.tif'
+        },
+        {
+            'start_num': 241,
+            'end_num': 286,
+            'tif_name': '18_4500_3000.tif'
+        },
+        {
+            'start_num': 287,
+            'end_num': 325,
+            'tif_name': '25_4500_4500.tif'
+        },
+        {
+            'start_num': 326,
+            'end_num': 370,
+            'tif_name': '31_3000_6000.tif'
+        },
+        {
+            'start_num': 371,
+            'end_num': 425,
+            'tif_name': '29_0_6000.tif'
+        },
+        {
+            'start_num': 426,
+            'end_num': 520,
+            'tif_name': '22_0_4500.tif'
+        },
+        {
+            'start_num': 521,
+            'end_num': 606,
+            'tif_name': '15_0_3000.tif'
+        },
+
+
+    ]
+    mappings_052409 = [
+        {
+            'start_num': 0,
+            'end_num': 75,
+            'tif_name': '29_0_6000.tif'
+        },
+        {
+            'start_num': 76,
+            'end_num': 142,
+            'tif_name': '31_3000_6000.tif'
+        },
+        {
+            'start_num': 143,
+            'end_num': 167,
+            'tif_name': '32_4500_6000.tif'
+        },
+        {
+            'start_num': 168,
+            'end_num': 194,
+            'tif_name': '25_4500_4500.tif'
+        },
+        {
+            'start_num': 195,
+            'end_num': 229,
+            'tif_name': '18_4500_3000.tif'
+        },
+        {
+            'start_num': 230,
+            'end_num': 306,
+            'tif_name': '11_4500_1500.tif'
+        },
+        {
+            'start_num': 307,
+            'end_num': 346,
+            'tif_name': '12_6000_1500.tif'
+        },
+        {
+            'start_num': 347,
+            'end_num': 386,
+            'tif_name': '5_6000_0.tif'
+        },
+        {
+            'start_num': 387,
+            'end_num': 424,
+            'tif_name': '6_7500_0.tif'
+        },
+        {
+            'start_num': 425,
+            'end_num': 457,
+            'tif_name': '13_7500_1500.tif'
+        },
+        {
+            'start_num': 458,
+            'end_num': 483,
+            'tif_name': '20_7500_3000.tif'
+        },
+        {
+            'start_num': 484,
+            'end_num': 525,
+            'tif_name': '21_9000_3000.tif'
+        },
+        {
+            'start_num': 526,
+            'end_num': 552,
+            'tif_name': '27_7500_4500.tif'
+        },
+    ]
     mappings_city1 = [
         {
             'start_num': 1,
@@ -1240,5 +1361,5 @@ if __name__ == "__main__":
     ]
 
 
-    create_pairs(uav_directory, tif_directory, pairs_txt_path, mappings_city1)
+    create_pairs(uav_directory, tif_directory, pairs_txt_path, mappings_052410)
 

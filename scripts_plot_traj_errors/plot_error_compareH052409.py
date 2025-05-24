@@ -44,7 +44,7 @@ def plot_multi_error_files(error_files, save_path="error_compare.png", y_limit=(
     colors = ['blue', 'green', 'red', 'orange', 'purple', 'brown']  # 最多6个源，足够
     custom_colors = [
         (0.2, 0.3, 0.8),  #
-        (0.5, 0.0, 0.5),
+        (0.8, 0.2, 0.2),
         (0.1, 0.6, 0.1),
         (0.8, 0.2, 0.2),
     ]
@@ -77,7 +77,7 @@ def plot_multi_error_files(error_files, save_path="error_compare.png", y_limit=(
                 edgecolor='black'
             )
             legend.get_frame().set_linewidth(1.0)
-            axs[i].set_ylim(y_limit)
+            # axs[i].set_ylim(y_limit)
         axs[i].tick_params(axis='both', direction='in', labelsize=16)
         axs[i].tick_params(labelbottom=True)  # ← 强制显示x轴刻度
 
@@ -108,11 +108,11 @@ if __name__ == "__main__":
         # "/home/lty/paper/results/011006/errors/error_proposed.txt",
 
         "/home/lty/paper/results/052409/error_files/error_elevpnp.txt",
-        "/home/lty/paper/results/052409/error_files/error_slam.txt",
+        "/home/lty/paper/results/052409/error_files/error_H.txt",
         "/home/lty/paper/results/052409/error_files/error_proposed.txt",
     ]
 
     # 自定义图例名称（将作为图例显示内容）
-    labels = ["ElevPnP", "ORB-SLAM3", "Proposed"]
+    labels = ["ElevPnP", "MatchWithH", "Proposed"]
 
-    plot_multi_error_files(error_files, save_path="/home/lty/paper/results/052409/error_compare.png", y_limit=(0, 150), labels=labels)
+    plot_multi_error_files(error_files, save_path="/home/lty/paper/results/052409/error_compareH.png", y_limit=(0, 150), labels=labels)

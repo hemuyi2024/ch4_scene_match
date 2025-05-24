@@ -5,12 +5,12 @@ import cv2
 
 gt_file = "/home/lty/outputs/seu0524/009/gt.txt"
 geotransform_file = "/home/lty/scripts/seu_geotransform_fix.txt"
-map_file = "/home/lty/datasets/RealUAV/city1/mapbox.tif"
-output_file = "/home/lty/outputs/RealUAV/city1/gt.png"
+map_file = "/home/lty/data/SEU/seu_resized/seu_resized_m300.tif"
+output_file = "/home/lty/outputs/seu0524/009/gt.png"
 
-def plot_gt(gt_file=gt_file, geotransform_file=geotransform_file, source_epsg=4326, target_epsg=3857,
+def plot_gt(gt_file=gt_file, geotransform_file=geotransform_file, source_epsg=4326, target_epsg=32650,
             map_file=map_file):
-    scale = 1.0
+    scale = 0.2
     geotransform = []
     with open(geotransform_file, "r") as f:
         # 逐行读取文件内容

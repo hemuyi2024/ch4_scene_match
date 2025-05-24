@@ -11,20 +11,20 @@ from my_pkg.tools import sort_key, pixel_to_geo_coordinates, read_pairs, extract
 import time
 from hloc.my_incremental_extract_retrive import run_incremental_retrieve
 
-output_dir = Path("/home/lty/outputs/RealUAV/city2/netvlad")
+output_dir = Path("/home/lty/outputs/RealUAV/city3/netvlad")
 output_dir.mkdir(exist_ok=True, parents= True)
 output_dir_db = output_dir / "db"
 output_dir_db.mkdir(exist_ok=True, parents= True)
 output_dir_query = output_dir / "query"
 query_global_descriptors = output_dir_query / "query_global_descriptors.h5"
-superpoint_features = Path("/home/lty/outputs/RealUAV/city2/features.h5")
+superpoint_features = Path("/home/lty/outputs/RealUAV/city3/features.h5")
 output_dir_query.mkdir(exist_ok=True, parents= True)
 netvlad_pairs = output_dir / "pairs-query-netvlad20.txt"
-image_dir = Path("/home/lty/datasets/RealUAV/city2/")
-query_image_dir = Path("/home/lty/datasets/RealUAV/city2/uav")
-img_list = Path("/home/lty/outputs/RealUAV/city2/img_list.txt")
-db_list = Path("/home/lty/outputs/RealUAV/city2/tif_list.txt")
-query_list = Path("/home/lty/outputs/RealUAV/city2/uav_list.txt")
+image_dir = Path("/home/lty/datasets/RealUAV/city3/")
+query_image_dir = Path("/home/lty/datasets/RealUAV/city3/uav")
+img_list = Path("/home/lty/outputs/RealUAV/city3/img_list.txt")
+db_list = Path("/home/lty/outputs/RealUAV/city3/tif_list.txt")
+query_list = Path("/home/lty/outputs/RealUAV/city3/uav_list.txt")
 
 retrieval_conf = extract_features.confs["netvlad"]
 t1 = time.time()

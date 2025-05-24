@@ -26,7 +26,7 @@ def read_pairs(pairs_file):
                 pairs.append(pair)
     return pairs
 
-def pixel_to_geo_coordinates(x, y, geotransform, source_epsg=3857, target_epsg=4326):
+def pixel_to_geo_coordinates(x, y, geotransform, source_epsg=32650, target_epsg=4326):
     """
     将像素坐标转换为经纬度坐标。
 

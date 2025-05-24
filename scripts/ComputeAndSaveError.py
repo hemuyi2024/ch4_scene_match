@@ -13,7 +13,7 @@ def ComputeAndSaveError(gt_file, geoKeyFrame_file, KeyFrameId_file, error_file):
     source_srs = osr.SpatialReference()
     source_srs.ImportFromEPSG(4326)
     target_srs = osr.SpatialReference()
-    target_srs.ImportFromEPSG(3857)
+    target_srs.ImportFromEPSG(32650)
     coord_transform = osr.CoordinateTransformation(source_srs, target_srs)
 
     gt_data = []
@@ -108,9 +108,9 @@ def ComputeAndSaveError(gt_file, geoKeyFrame_file, KeyFrameId_file, error_file):
 
 
 if __name__ == '__main__':
-    gt_file = "/home/lty/datasets/RealUAV/city1/gt.txt"
-    KeyFrameId_file = "/home/lty/outputs/RealUAV/city1/KeyFrameId.txt"
-    error_file = "/home/lty/outputs/RealUAV/city1/error_proposed(slam).txt"
-    geoKeyFrame_file = '/home/lty/outputs/RealUAV/city1/geoKFrame_proposed(slam).txt'
+    gt_file = "/home/lty/outputs/seu0524/009/gt.txt"
+    KeyFrameId_file = "/home/lty/outputs/seu0524/009/KeyFrameId.txt"
+    error_file = "/home/lty/paper/results/052409/error_files/error_slam.txt"
+    geoKeyFrame_file = '/home/lty/paper/results/052409/traj_1.0/ORB-SLAM3.txt'
 
     ComputeAndSaveError(gt_file, geoKeyFrame_file, KeyFrameId_file, error_file)

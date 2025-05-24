@@ -3,18 +3,17 @@ import numpy as np
 
 # 输入轨迹文件列表（只含 x y）
 input_files = [
-    "/home/lty/论文/results/city1/GroundTruth.txt",
-    "/home/lty/论文/results/city1/match.txt",
-    "/home/lty/论文/results/city1/slam.txt",
-    "/home/lty/论文/results/city1/elevation.txt",
-    "/home/lty/论文/results/city1/proposed.txt",
+    "/home/lty/paper/results/052409/groudtruth.txt",
+    "/home/lty/paper/results/052409/elevpnp.txt",
+    "/home/lty/paper/results/052409/ORB-SLAM3.txt",
+    "/home/lty/paper/results/052409/Proposed.txt",
 ]
 
 # 参考的 TUM 轨迹文件（含完整信息）
-reference_file = "/home/lty/outputs/RealUAV/city1/KeyFrameTrajectoryGeo.txt"
+reference_file = "/home/lty/outputs/seu0524/009/KeyFrameTrajectoryGeo.txt"
 
 # 输出目录
-output_dir = "/home/lty/论文/results/city1/traj_tum"
+output_dir = "/home/lty/paper/results/052409/traj_tum"
 os.makedirs(output_dir, exist_ok=True)
 
 def load_reference_tum(file_path):

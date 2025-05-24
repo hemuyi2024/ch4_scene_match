@@ -83,5 +83,5 @@ def plot_errors(error_file, save_path="error_plot.png", y_limit=(-10, 10)):
     plt.show()
 
 if __name__ == "__main__":
-    error_file = "/home/lty/outputs/RealUAV/city1/error_fusion_slam.txt"
-    plot_errors(error_file, save_path="error_plot.png", y_limit=(0,20))
+    error_file = "/home/lty/outputs/scene_match_seu_0110_6/error_elevation.txt"
+    plot_errors(error_file, save_path="error_plot.png", y_limit=(0,35))

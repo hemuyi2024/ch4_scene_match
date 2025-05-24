@@ -4,6 +4,7 @@ def loc2geo(keyframeid_path, locfile_path, outputgeo_path):
     keyframe_mapping = parse_keyframe_file(keyframeid_path)
 
     loc_dict = {}
+    i = 0
 
     with open(locfile_path, "r") as f:
         for line in f:
@@ -13,7 +14,8 @@ def loc2geo(keyframeid_path, locfile_path, outputgeo_path):
             filename = parts[0]
             try:
                 # 这里减1，确保uav/001.jpg 对应 frame_id=0
-                frame_id = int(filename.split('/')[-1].split('.')[0]) - 1
+                frame_id = i
+                i+=1
             except:
                 continue
 
@@ -39,7 +41,7 @@ def loc2geo(keyframeid_path, locfile_path, outputgeo_path):
 # loc2geo("keyframeid.txt", "loc.txt", "output_geo.txt")
 
 if __name__ == '__main__':
-    keyframeid_path = "/home/lty/outputs/RealUAV/city1/KeyFrameId.txt"
-    locfile_path = "/home/lty/outputs/RealUAV/city1/loc_from_gt.txt"
-    outputgeo_path = "/home/lty/论文/results/city1/GroundTruth.txt"
+    keyframeid_path = "/home/lty/code/ORB_SLAM3_detailed_comments/KeyFrameId.txt"
+    locfile_path = "/home/lty/outputs/seu0524/009/loc_dsm_.txt"
+    outputgeo_path = "/home/lty/paper/results/052409/elevpnp-noise.txt"
     loc2geo(keyframeid_path, locfile_path, outputgeo_path)

@@ -58,6 +58,7 @@ def get_utm_3d_points_from_dsm(dsm_path, pts2_inliers_geo_utm):
     for idx, (utm_x, utm_y) in enumerate(pts2_inliers_geo_utm):
         pixel_x = int(round((utm_x - origin_x) / pixel_width))
         pixel_y = int(round((utm_y - origin_y) / pixel_height))
+        print(f"zuobiao:{pixel_x},{pixel_y}")
 
         if 0 <= pixel_x < cols and 0 <= pixel_y < rows:
             elevation = dsm_array[pixel_y, pixel_x]
