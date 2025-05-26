@@ -17,8 +17,8 @@ def process_trajectory(input_file, output_file):
     # offset_y = 3548389.262551563
 
     #011006
-    offset_x = 668627.38021085
-    offset_y = 3548190.77141221
+    offset_x = 668747.18997038
+    offset_y = 3548144.79109947
 
     # 打开输入文件进行读取
     with open(input_file, 'r') as infile:
@@ -46,8 +46,8 @@ def process_trajectory(input_file, output_file):
 
 
 # 调用函数，传入文件路径
-input_file = '/home/lty/outputs/seu0524/009/KeyFrameTrajectory.txt'
-output_file = '/home/lty/paper/results/052409/ORB-SLAM3.txt'
+input_file = '/home/lty/outputs/seu0524/005/KeyFrameTrajectory.txt'
+output_file = '/home/lty/paper/results/052405/orb-slam3.txt'
 process_trajectory(input_file, output_file)
 
 print("Processing complete. Converted data saved to 'geoKFrame.txt'.")

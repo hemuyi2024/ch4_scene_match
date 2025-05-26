@@ -42,6 +42,7 @@ def loc2geo(keyframeid_path, locfile_path, outputgeo_path):
 
 if __name__ == '__main__':
     keyframeid_path = "/home/lty/code/ORB_SLAM3_detailed_comments/KeyFrameId.txt"
-    locfile_path = "/home/lty/outputs/seu0524/009/loc_dsm_.txt"
-    outputgeo_path = "/home/lty/paper/results/052409/elevpnp-noise.txt"
+    # keyframeid_path = "/home/lty/outputs/seu0524/005/KeyFrameId.txt"
+    locfile_path = "/home/lty/outputs/seu0524/005/loc_gt.txt"
+    outputgeo_path = "/home/lty/paper/results/052405/gtnew.txt"
     loc2geo(keyframeid_path, locfile_path, outputgeo_path)

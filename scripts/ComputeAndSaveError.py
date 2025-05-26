@@ -108,9 +108,9 @@ def ComputeAndSaveError(gt_file, geoKeyFrame_file, KeyFrameId_file, error_file):
 
 
 if __name__ == '__main__':
-    gt_file = "/home/lty/outputs/seu0524/009/gt.txt"
-    KeyFrameId_file = "/home/lty/outputs/seu0524/009/KeyFrameId.txt"
-    error_file = "/home/lty/paper/results/052409/error_files/error_slam.txt"
-    geoKeyFrame_file = '/home/lty/paper/results/052409/traj_1.0/ORB-SLAM3.txt'
+    gt_file = "/home/lty/outputs/seu0524/005/gt.txt"
+    KeyFrameId_file = "/home/lty/outputs/seu0524/005/KeyFrameId.txt"
+    error_file = "/home/lty/paper/results/052405/error_files/error_slam.txt"
+    geoKeyFrame_file = '/home/lty/paper/results/052405/traj/orb-slam3.txt'
 
     ComputeAndSaveError(gt_file, geoKeyFrame_file, KeyFrameId_file, error_file)

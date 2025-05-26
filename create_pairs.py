@@ -47,7 +47,7 @@ def create_pairs(uav_dir, tif_dir, pairs_file, mappings):
                 if mapping['start_num'] <= img_num <= mapping['end_num']:
                     tif_name = mapping['tif_name']
                     if tif_name in tif_images:
-                        uav_img_path = os.path.join("seu_uav_052409/",uav_img)
+                        uav_img_path = os.path.join("seu_uav_052405/",uav_img)
                         tif_file_path = os.path.join("seu_tif_m300/",tif_name)
                         pairs.append((uav_img_path, tif_file_path))
                         matched = True
@@ -70,13 +70,162 @@ def create_pairs(uav_dir, tif_dir, pairs_file, mappings):
 
 if __name__ == "__main__":
     # 无人机图片文件夹路径
-    uav_directory = "/home/lty/datasets_my/DJI/m300/seu_uav_052410"
+    uav_directory = "/home/lty/datasets_my/DJI/m300/seu_uav_052405"
     # TIF 影像文件夹路径
     tif_directory = "/home/lty/datasets_my/DJI/m300/seu_tif_m300"
     # 输出的 pairs.txt 文件路径
-    pairs_txt_path = "//home/lty/outputs/seu0524/010/pairs.txt"
+    pairs_txt_path = "//home/lty/outputs/seu0524/005/pairs.txt"
 
     # 指定编号范围映射关系 11-21-dji0200
+    mappings_052405 = [
+        {
+            'start_num': 0,
+            'end_num': 60,
+            'tif_name': '31_3000_6000.tif'
+        },
+        {
+            'start_num': 61,
+            'end_num': 98,
+            'tif_name': '32_4500_6000.tif'
+        },
+        {
+            'start_num': 99,
+            'end_num': 116,
+            'tif_name': '33_6000_6000.tif'
+        },
+        {
+            'start_num': 117,
+            'end_num': 170,
+            'tif_name': '26_6000_4500.tif'
+        },
+        {
+            'start_num': 171,
+            'end_num': 190,
+            'tif_name': '20_7500_3000.tif'
+        },
+        {
+            'start_num': 191,
+            'end_num': 230,
+            'tif_name': '12_6000_1500.tif'
+        },
+        {
+            'start_num': 231,
+            'end_num': 280,
+            'tif_name': '5_6000_0.tif'
+        },
+        {
+            'start_num': 281,
+            'end_num': 310,
+            'tif_name': '4_4500_0.tif'
+        },
+        {
+            'start_num': 311,
+            'end_num': 330,
+            'tif_name': '3_3000_0.tif'
+        },
+        {
+            'start_num': 331,
+            'end_num': 359,
+            'tif_name': '2_1500_0.tif'
+        },
+        {
+            'start_num': 360,
+            'end_num': 418,
+            'tif_name': '8_0_1500.tif'
+        },
+        {
+            'start_num': 419,
+            'end_num': 465,
+            'tif_name': '15_0_3000.tif'
+        },
+        {
+            'start_num': 466,
+            'end_num': 501,
+            'tif_name': '22_0_4500.tif'
+        },
+    ]
+    mappings_052411 = [
+        {
+            'start_num': 0,
+            'end_num': 30,
+            'tif_name': '8_0_1500.tif'
+        },
+        {
+            'start_num': 31,
+            'end_num': 80,
+            'tif_name': '15_0_3000.tif'
+        },
+        {
+            'start_num': 81,
+            'end_num': 140,
+            'tif_name': '22_0_4500.tif'
+        },
+        {
+            'start_num': 141,
+            'end_num': 190,
+            'tif_name': '29_0_6000.tif'
+        },
+        {
+            'start_num': 191,
+            'end_num': 230,
+            'tif_name': '30_1500_6000.tif'
+        },
+        {
+            'start_num': 231,
+            'end_num': 270,
+            'tif_name': '31_3000_6000.tif'
+        },
+        {
+            'start_num': 271,
+            'end_num': 320,
+            'tif_name': '32_4500_6000.tif'
+        },
+        {
+            'start_num': 321,
+            'end_num': 380,
+            'tif_name': '25_4500_4500.tif'
+        },
+        {
+            'start_num': 381,
+            'end_num': 440,
+            'tif_name': '18_4500_3000.tif'
+        },
+        {
+            'start_num': 441,
+            'end_num': 470,
+            'tif_name': '11_4500_1500.tif'
+        },
+        {
+            'start_num': 471,
+            'end_num': 520,
+            'tif_name': '5_6000_0.tif'
+        },
+        {
+            'start_num': 521,
+            'end_num': 600,
+            'tif_name': '6_7500_0.tif'
+        },
+        {
+            'start_num': 601,
+            'end_num': 650,
+            'tif_name': '13_7500_1500.tif'
+        },
+        {
+            'start_num': 651,
+            'end_num': 690,
+            'tif_name': '20_7500_3000.tif'
+        },
+        {
+            'start_num': 691,
+            'end_num': 710,
+            'tif_name': '27_7500_4500.tif'
+        },
+        {
+            'start_num': 711,
+            'end_num': 732,
+            'tif_name': '33_6000_6000.tif'
+        },
+    ]
     mappings_052410 = [
         {
             'start_num': 0,
@@ -1361,5 +1510,5 @@ if __name__ == "__main__":
     ]
 
 
-    create_pairs(uav_directory, tif_directory, pairs_txt_path, mappings_052410)
+    create_pairs(uav_directory, tif_directory, pairs_txt_path, mappings_052405)
 

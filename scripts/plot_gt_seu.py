@@ -3,10 +3,10 @@ import cv2
 
 # from scripts.tum2geo import output_file
 
-gt_file = "/home/lty/outputs/seu0524/009/gt.txt"
+gt_file = "/home/lty/outputs/seu0524/005/gt.txt"
 geotransform_file = "/home/lty/scripts/seu_geotransform_fix.txt"
 map_file = "/home/lty/data/SEU/seu_resized/seu_resized_m300.tif"
-output_file = "/home/lty/outputs/seu0524/009/gt.png"
+output_file = "/home/lty/outputs/seu0524/005/gt.png"
 
 def plot_gt(gt_file=gt_file, geotransform_file=geotransform_file, source_epsg=4326, target_epsg=32650,
             map_file=map_file):
