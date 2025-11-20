@@ -2,6 +2,7 @@ import matplotlib.pyplot as plt
 import matplotlib.ticker as ticker
 import numpy as np
 import os
+from mpl_toolkits.axes_grid1.inset_locator import inset_axes, mark_inset
 
 def load_trajectory(file_path):
     data = np.loadtxt(file_path)
@@ -61,6 +62,37 @@ def plot_trajectories(file_list, legend_labels, output_path="trajectory_plot.png
     plt.axis('equal')
     plt.tight_layout()
 
+    # ✅ 添加局部放大图
+    axins = inset_axes(
+        ax,
+        width=2.7 , # 单位：英寸
+        height=1.2,  # 单位：英寸
+        loc='lower right',
+        # bbox_to_anchor=(0.18, 0.4),
+        bbox_transform=ax.transAxes,
+        borderpad=1
+    )
+    # 设置放大区域范围（根据你想关注的区域设置）
+    x1, x2 = 668870, 668915  # UTM X 范围
+    y1, y2 = 3548320, 3548340  # UTM Y 范围
+    axins.set_xlim(x1, x2)
+    axins.set_ylim(y1, y2)
+
+    # 在局部图中重绘轨迹
+    for idx, (x, y) in enumerate(trajectories):
+        linestyle = '--' if idx == 0 else '-'
+        axins.plot(x, y, color=custom_colors[idx], linestyle=linestyle, linewidth=2.4)
+
+    axins.tick_params(axis='both', labelsize=10, direction='in', left=False, right=False, labelleft=False,
+                      labelbottom=False)
+    axins.grid(False)
+    axins.set_xticks([])
+    axins.set_yticks([])
+    axins.tick_params(left=False, right=False, bottom=False, top=False)
+
+    # 加上主图与局部图连线
+    mark_inset(ax, axins, loc1=2, loc2=4, fc="none", ec="black", linewidth=1.0)
+
     # 保存图像
     plt.savefig(output_path, dpi=300)
     print(f"图像保存至：{output_path}")
@@ -86,5 +118,5 @@ if __name__ == "__main__":
     plot_trajectories(
         trajectory_files,
         legend_labels,
-        output_path="/home/lty/paper/results/052410/traj_compare2.0.png"
+        output_path="/home/lty/paper/results/052410/traj_compare0603.png"
     )

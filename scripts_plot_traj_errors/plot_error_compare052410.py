@@ -59,9 +59,9 @@ def plot_multi_error_files(error_files, save_path="error_compare.png", y_limit=(
     # 对每个误差文件进行处理
     for idx, (file, label, color) in enumerate(zip(error_files, labels, custom_colors)):
         traj, ex, ey, dist = parse_error_file(file)
-        axs[0].plot(traj, ex, label=label, color=color, marker='o', markersize=1, linewidth=1.5)
-        axs[1].plot(traj, ey, label=label, color=color, marker='o', markersize=1, linewidth=1.5)
-        axs[2].plot(traj, dist, label=label, color=color, marker='o', markersize=1, linewidth=1.5)
+        axs[0].plot(traj, ex, label=label, color=color, marker='o', markersize=1, linewidth=2.5)
+        axs[1].plot(traj, ey, label=label, color=color, marker='o', markersize=1, linewidth=2.5)
+        axs[2].plot(traj, dist, label=label, color=color, marker='o', markersize=1, linewidth=2.5)
 
     # 设置三个子图的参数
     for i in range(3):
@@ -116,4 +116,4 @@ if __name__ == "__main__":
     # 自定义图例名称（将作为图例显示内容）
     labels = ["ElevPnP", "ORB-SLAM3", "Proposed"]
 
-    plot_multi_error_files(error_files, save_path="/home/lty/paper/results/052410/error_compare.png", y_limit=(0, 150), labels=labels)
+    plot_multi_error_files(error_files, save_path="/home/lty/paper/results/052410/052410.png", y_limit=(0, 150), labels=labels)

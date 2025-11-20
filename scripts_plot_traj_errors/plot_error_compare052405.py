@@ -59,16 +59,16 @@ def plot_multi_error_files(error_files, save_path="error_compare.png", y_limit=(
     # 对每个误差文件进行处理
     for idx, (file, label, color) in enumerate(zip(error_files, labels, custom_colors)):
         traj, ex, ey, dist = parse_error_file(file)
-        axs[0].plot(traj, ex, label=label, color=color, marker='o', markersize=1, linewidth=1.5)
-        axs[1].plot(traj, ey, label=label, color=color, marker='o', markersize=1, linewidth=1.5)
-        axs[2].plot(traj, dist, label=label, color=color, marker='o', markersize=1, linewidth=1.5)
+        axs[0].plot(traj, ex, label=label, color=color, marker='o', markersize=1, linewidth=2.5)
+        axs[1].plot(traj, ey, label=label, color=color, marker='o', markersize=1, linewidth=2.5)
+        axs[2].plot(traj, dist, label=label, color=color, marker='o', markersize=1, linewidth=2.5)
 
     # 设置三个子图的参数
     for i in range(3):
         axs[i].set_ylabel(y_labels[i])
         axs[i].grid(True)
         # axs[i].set_ylim(y_limit)
-        if i == 0:
+        if i == 1:
             legend = axs[i].legend(
                 loc='upper left',
                 # bbox_to_anchor=(0.3, 0.5),  # 从 1.05 调整到 1.02

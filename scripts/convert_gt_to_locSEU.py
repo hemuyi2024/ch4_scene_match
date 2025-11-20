@@ -72,8 +72,8 @@ def convert_gt_to_loc(gt_path, geotransform_path, save_path, prefix="uav/", imag
 
 # 示例调用
 if __name__ == "__main__":
-    gt_path = "/home/lty/outputs/seu0524/005/gt.txt"
+    gt_path = "/home/lty/outputs/scene_match_seu_0110_6/gt.txt"
     geotransform_path = "/home/lty/scripts/seu_geotransform_m300.txt"
-    save_path = "/home/lty/outputs/seu0524/005/loc_gt.txt"
+    save_path = "/home/lty/outputs/scene_match_seu_0110_6/loc_from_gt.txt"
 
     convert_gt_to_loc(gt_path, geotransform_path, save_path)

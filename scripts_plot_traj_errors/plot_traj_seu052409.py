@@ -2,6 +2,7 @@ import matplotlib.pyplot as plt
 import matplotlib.ticker as ticker
 import numpy as np
 import os
+from mpl_toolkits.axes_grid1.inset_locator import inset_axes, mark_inset
 
 def load_trajectory(file_path):
     data = np.loadtxt(file_path)
@@ -52,6 +53,9 @@ def plot_trajectories(file_list, legend_labels, output_path="trajectory_plot.png
     ax.yaxis.set_major_formatter(ticker.FuncFormatter(lambda y, _: f'{int(y):d}'))
     plt.tick_params(axis='both', direction='in', labelsize=16)
 
+    ax.xaxis.set_major_locator(ticker.MultipleLocator(85))  # 每50米一格
+    ax.yaxis.set_major_locator(ticker.MultipleLocator(45))
+
     # 标注与图例
     plt.xlabel("UTM X (m)", fontsize=16)
     plt.ylabel("UTM Y (m)", fontsize=16)
@@ -61,6 +65,37 @@ def plot_trajectories(file_list, legend_labels, output_path="trajectory_plot.png
     plt.axis('equal')
     plt.tight_layout()
 
+    # ✅ 添加局部放大图
+    axins = inset_axes(
+        ax,
+        width=2.2,  # 单位：英寸
+        height=2.2,  # 单位：英寸
+        loc='center',
+        bbox_to_anchor=(0.18, 0.4),
+        bbox_transform=ax.transAxes,
+        borderpad=0.5
+    )
+    # 设置放大区域范围（根据你想关注的区域设置）
+    x1, x2 = 668880, 668910  # UTM X 范围
+    y1, y2 = 3548355, 3548385  # UTM Y 范围
+    axins.set_xlim(x1, x2)
+    axins.set_ylim(y1, y2)
+
+    # 在局部图中重绘轨迹
+    for idx, (x, y) in enumerate(trajectories):
+        linestyle = '--' if idx == 0 else '-'
+        axins.plot(x, y, color=custom_colors[idx], linestyle=linestyle, linewidth=2.4)
+
+    axins.tick_params(axis='both', labelsize=10, direction='in', left=False, right=False, labelleft=False,
+                      labelbottom=False)
+    axins.grid(False)
+    axins.set_xticks([])
+    axins.set_yticks([])
+    axins.tick_params(left=False, right=False, bottom=False, top=False)
+
+    # 加上主图与局部图连线
+    mark_inset(ax, axins, loc1=2, loc2=4, fc="none", ec="black", linewidth=1.0)
+
     # 保存图像
     plt.savefig(output_path, dpi=300)
     print(f"图像保存至：{output_path}")
@@ -68,10 +103,10 @@ def plot_trajectories(file_list, legend_labels, output_path="trajectory_plot.png
 if __name__ == "__main__":
     trajectory_files = [
         #052409
-        "/home/lty/paper/results/052409/traj_1.0/groudtruth.txt",
-        "/home/lty/paper/results/052409/elevpnp-noise.txt",
-        "/home/lty/paper/results/052409/traj_1.0/ORB-SLAM3.txt",
-        "/home/lty/paper/results/052409/traj_1.0/Proposed.txt",
+        "/home/lty/paper/results/052409/traj0603/gt.txt",
+        "/home/lty/paper/results/052409/traj0603/elevpnp.txt",
+        "/home/lty/paper/results/052409/traj0603/slam.txt",
+        "/home/lty/paper/results/052409/traj0603/proposed.txt",
 
         #052409-h
     ]
@@ -86,5 +121,5 @@ if __name__ == "__main__":
     plot_trajectories(
         trajectory_files,
         legend_labels,
-        output_path="/home/lty/paper/results/052409/traj_compare-noise.png"
+        output_path="/home/lty/paper/results/052409/traj_compare0603.png"
     )

@@ -3,11 +3,12 @@ import numpy as np
 
 # 输入轨迹文件列表（只含 x y）
 input_files = [
-    "/home/lty/paper/results/052405/traj/gt.txt",
-    "/home/lty/paper/results/052405/traj/elevpnp(1.2).txt",
-    "/home/lty/paper/results/052405/traj/orb-slam3.txt",
-    "/home/lty/paper/results/052405/traj/proposed.txt",
-    # "/home/lty/paper/results/052410/traj/H.txt"
+    # "/home/lty/paper/results/052409/traj0603/gt.txt",
+    # "/home/lty/paper/results/052409/traj0603/elevpnp.txt",
+    # "/home/lty/paper/results/052409/traj0603/slam.txt",
+    # "/home/lty/paper/results/052409/traj0603/proposed.txt",
+    "/home/lty/paper/results/052405/traj/h.txt",
+
 ]
 
 # 参考的 TUM 轨迹文件（含完整信息）

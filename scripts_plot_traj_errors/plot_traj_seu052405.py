@@ -52,6 +52,9 @@ def plot_trajectories(file_list, legend_labels, output_path="trajectory_plot.png
     ax.yaxis.set_major_formatter(ticker.FuncFormatter(lambda y, _: f'{int(y):d}'))
     plt.tick_params(axis='both', direction='in', labelsize=16)
 
+    ax.xaxis.set_major_locator(ticker.MultipleLocator(90))  # 每85米一格
+    ax.yaxis.set_major_locator(ticker.MultipleLocator(45))
+
     # 标注与图例
     plt.xlabel("UTM X (m)", fontsize=16)
     plt.ylabel("UTM Y (m)", fontsize=16)
@@ -86,5 +89,5 @@ if __name__ == "__main__":
     plot_trajectories(
         trajectory_files,
         legend_labels,
-        output_path="/home/lty/paper/results/052405/traj_compare.png"
+        output_path="/home/lty/paper/results/052405/traj_compare0603.png"
     )

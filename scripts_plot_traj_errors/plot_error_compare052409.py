@@ -59,9 +59,9 @@ def plot_multi_error_files(error_files, save_path="error_compare.png", y_limit=(
     # 对每个误差文件进行处理
     for idx, (file, label, color) in enumerate(zip(error_files, labels, custom_colors)):
         traj, ex, ey, dist = parse_error_file(file)
-        axs[0].plot(traj, ex, label=label, color=color, marker='o', markersize=1, linewidth=1.5)
-        axs[1].plot(traj, ey, label=label, color=color, marker='o', markersize=1, linewidth=1.5)
-        axs[2].plot(traj, dist, label=label, color=color, marker='o', markersize=1, linewidth=1.5)
+        axs[0].plot(traj, ex, label=label, color=color, marker='o', markersize=1, linewidth=2.5)
+        axs[1].plot(traj, ey, label=label, color=color, marker='o', markersize=1, linewidth=2.5)
+        axs[2].plot(traj, dist, label=label, color=color, marker='o', markersize=1, linewidth=2.5)
 
     # 设置三个子图的参数
     for i in range(3):
@@ -77,14 +77,18 @@ def plot_multi_error_files(error_files, save_path="error_compare.png", y_limit=(
                 edgecolor='black'
             )
             legend.get_frame().set_linewidth(1.0)
-            axs[i].set_ylim(y_limit)
+            # axs[i].set_ylim(y_limit)
         axs[i].tick_params(axis='both', direction='in', labelsize=16)
         axs[i].tick_params(labelbottom=True)  # ← 强制显示x轴刻度
 
+    axs[2].set_ylim(y_limit)
     axs[0].set_xlabel("Trajectory Length (m)")
     axs[1].set_xlabel("Trajectory Length (m)")
     axs[2].set_xlabel("Trajectory Length (m)")
     plt.tight_layout()
+    # shuchu tu bianju
+
+
     # plt.subplots_adjust(wspace=0.3)  # 或其他你觉得合适的值
     plt.savefig(save_path, dpi=300)
     plt.show()
@@ -107,12 +111,12 @@ if __name__ == "__main__":
         # "/home/lty/paper/results/011006/errors/error_ORB-SLAM3.txt",
         # "/home/lty/paper/results/011006/errors/error_proposed.txt",
 
-        "/home/lty/paper/results/052409/error_files/error_elevpnp.txt",
-        "/home/lty/paper/results/052409/error_files/error_slam.txt",
-        "/home/lty/paper/results/052409/error_files/error_proposed.txt",
+        "/home/lty/paper/results/052409/errors/elevpnp.txt",
+        "/home/lty/paper/results/052409/errors/slam.txt",
+        "/home/lty/paper/results/052409/errors/proposed.txt",
     ]
 
     # 自定义图例名称（将作为图例显示内容）
     labels = ["ElevPnP", "ORB-SLAM3", "Proposed"]
 
-    plot_multi_error_files(error_files, save_path="/home/lty/paper/results/052409/error_compare.png", y_limit=(0, 150), labels=labels)
+    plot_multi_error_files(error_files, save_path="/home/lty/paper/results/052409/error_compare0603.png", y_limit=(0, 15), labels=labels)
